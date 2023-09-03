@@ -1,10 +1,10 @@
-// Version: 1.0.1
-// Serial: UVWX1122
+// Version: 1.1.2
+// Serial: UVWX1123
 
 const mongoose = require('mongoose');
 
 const pdfSchema = new mongoose.Schema({
-    title: {
+    filename: {
         type: String,
         required: true
     },
@@ -12,16 +12,16 @@ const pdfSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    textContent: {
-        type: String,
-        required: true
+    extractedTextPath: {
+        type: String
     },
     uploadedBy: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
+        required: true,
+        ref: 'User'
     }
 });
 
 const PDF = mongoose.model('PDF', pdfSchema);
+
 module.exports = PDF;
