@@ -1,0 +1,5 @@
+# Version: 1.0.3
+# Serial: UVWX5566
+
+node_modules/
+.env
