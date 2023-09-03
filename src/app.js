@@ -1,22 +1,17 @@
-// Version: 1.0.0
-// Serial: ABCD1234
+
+
+
 
 const express = require('express');
 const mongoose = require('mongoose');
-const dotenv = require('dotenv').config();
+const dotenv = require('dotenv');
+const path = require('path');
 
-const connectDB = require('../config/database');
-
-
-
-// Connect to MongoDB
-connectDB();
-
-
+// Load environment variables
 dotenv.config();
 
+// Initialize Express app
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, {
@@ -25,16 +20,28 @@ mongoose.connect(process.env.MONGO_URI, {
 }).then(() => {
     console.log('Connected to MongoDB');
 }).catch(err => {
-    console.error('Failed to connect to MongoDB', err);
+    console.error('Failed to connect to MongoDB:', err.message);
 });
 
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Placeholder for routes
-// ...
+// Set view engine to EJS
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+// Routes
+app.get('/', (req, res) => {
+    res.render('index');
 });
+
+// Add other routes here...
+
+// Start server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server started on http://localhost:${PORT}`);
+});
+
+module.exports = app;
